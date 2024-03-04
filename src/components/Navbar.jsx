@@ -12,7 +12,7 @@ function Navbar() {
         <div>
             <div className="container lg:w-[80%] mx-auto lg:my-4 flex justify-between items-center">
                 <div className="logo  lg:text-3xl font-mono uppercase ">
-                    <Link className='border-solid border-purple-500 border-4 py-1 px-4' to="/">Platom System</Link>
+                    <Link className='border-solid rounded-md border-purple-500 border-4 py-1 px-4' to="/">Platom System</Link>
                 </div>
 
 
@@ -31,9 +31,9 @@ function Navbar() {
 
 
                 <div className="icons flex justify-around text-xl lg:w-[8%]">
-                    <Link to=""><FaLinkedin/></Link>
-                    <a href="#"><FaGithub/></a>
-                    
+                    <Link to="https://www.linkedin.com/in/3mrgouda" target='_blank'><FaLinkedin/></Link>
+                    <Link to="https://github.com/3mrgouda/Platom-System" target='_blank'><FaGithub/></Link>
+                  
                 </div>
 
 
