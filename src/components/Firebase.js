@@ -13,28 +13,28 @@ const firebaseConfig = {
 };
 
 // Initialize Firebase
-initializeApp(firebaseConfig);
+export const App = initializeApp(firebaseConfig);
 
 //Initialize Serveices
-const db = getFirestore();
+const db = getFirestore(App);
 
 // Collection ref
-const colRef = collection(db,"Items");
+const colRef = collection(db,"members");
 
 // get collection data
 getDocs(colRef).then((snapshot)=>{
-    let items = [];
+    let members = [];
     snapshot.docs.forEach((doc)=>{
-        items.push({...doc.data() , id: doc.id})
+        members.push({...doc.data() , id: doc.id})
     })
-    console.log(items)
+    console.log(members)
 })
 .catch(err =>{
     console.log(err.message)
 })
 
-//adding documents
-const addItemForm = ()=>{
+// //adding documents
+// const addItemForm = ()=>{
 
-}
+// }
 

@@ -11,7 +11,7 @@ function App() {
     <>
    <BrowserRouter>
    <Routes>
-    <Route path='/controller' element={<Controller/>}/>
+    <Route path='/controller/*' element={<Controller/>}/>
     <Route path='/' element={<><Navbar/><Hero/></>}/>
       </Routes>
    </BrowserRouter>
