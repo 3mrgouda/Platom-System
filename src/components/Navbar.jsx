@@ -2,9 +2,9 @@ import React from 'react';
 import { FaGithub, FaLinkedin } from 'react-icons/fa6';
 import { Link } from 'react-router-dom';
 const NavLinks = [
-    { id: 1, link: "#", item: "members" },
-    { id: 2, link: "#", item: "members" },
-    { id: 3, link: "#", item: "members" },
+    { id: 1, link: "#", item: "Home" },
+    { id: 2, link: "#", item: "Contact" },
+    { id: 3, link: "#", item: "About" },
 ]
 
 function Navbar() {

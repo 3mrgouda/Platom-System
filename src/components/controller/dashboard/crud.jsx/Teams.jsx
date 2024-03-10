@@ -3,6 +3,8 @@ import { db } from '../../../Firebase';
 import { collection, getDocs, addDoc, deleteDoc, doc } from 'firebase/firestore';
 import { FaPlus } from "react-icons/fa6";
 import { AiOutlineUsergroupDelete } from "react-icons/ai";
+import { FiEdit } from "react-icons/fi";
+
 
 
 
@@ -26,7 +28,14 @@ const Teams = () => {
       // Clear the input field
       setNewTeamMember('');
       setIsVisible
-      location.reload();
+      
+ //to show new data after editting
+ getDocs(colRef)
+ .then((snapshot) => {
+   const teamsDocs = snapshot.docs.map(doc => ({ ...doc.data(), id: doc.id }));
+   setTeam(teamsDocs);
+ })
+
     } catch (error) {
       console.error("Error adding new team member: ", error);
     }
@@ -65,12 +74,23 @@ const Teams = () => {
 
 
   //delet items
-  const handleDelete = async (id, Tname) => {
+  const handleDelete = async (id) => {
     try {
       await deleteDoc(doc(db, 'teams', id))
-      alert(`" ${Tname} Team " has deleted succesfully`);
-      location.reload();
+      
 
+      //to show new data after editting
+      getDocs(colRef)
+      .then((snapshot) => {
+        const teamsDocs = snapshot.docs.map(doc => ({ ...doc.data(), id: doc.id }));
+        setTeam(teamsDocs);
+      })
+
+
+
+      .catch(err => {
+        console.error("Error fetching team data: ", err);
+      });
     } catch (error) {
       console.error('Error removing document: ', error);
     }
@@ -92,10 +112,10 @@ const Teams = () => {
               <th>Team name</th>
               {/* <th>Members</th> */}
               <th>Event</th>
-              <th>Update</th>
+              {/* <th>Update</th> */}
               <th>Delete</th>
               <th>
-                <button onClick={() => toggleVisibility()} className='flex items-center text-xl bg-purple-500 rounded-md  px-2 lg:mt-[3px] font-bold'> <FaPlus />Add</button>
+                <button onClick={() => toggleVisibility()} className='flex items-center text-xl bg-purple-500 rounded-md  px-2 lg:mt-[2px] font-bold'> <FaPlus />Add</button>
 
               </th>
             </tr>
@@ -107,7 +127,7 @@ const Teams = () => {
               team.map((tem, i) => {
 
                 return (
-                  <tr key={i} className='border-b-2 lg:text-xl text-gray-700 capitalize hover:bg-purple-500 cursor-pointer hover:text-black hover:scale-105 duration-150'>
+                  <tr key={i} className='border-b-2 lg:text-xl text-gray-700 capitalize hover:bg-purple-500 hover:text-black hover:scale-105 duration-150'>
                     <td>{i + 1}</td>
                     <td>{tem.Tname}</td>
                     {/* {
@@ -119,8 +139,8 @@ const Teams = () => {
                       })
                     } */}
                     <td>event</td>
-                    <td>update</td>
-                    <td><button onClick={() => handleDelete(tem.id, tem.Tname)} className='ml-5'><AiOutlineUsergroupDelete className='hover:scale-150 hover:bg-red-600 hover:rounded-md duration-200' /></button></td>
+                    {/* <td><button  className='ml-5'><FiEdit className='hover:scale-150 hover:bg-red-600 hover:rounded-md duration-200' /></button></td> */}
+                    <td><button onClick={() => handleDelete(tem.id)} className='ml-5'><AiOutlineUsergroupDelete className='hover:scale-150 cursor-pointer hover:bg-red-600 hover:rounded-md duration-200' /></button></td>
                   </tr>
                 )
               })
