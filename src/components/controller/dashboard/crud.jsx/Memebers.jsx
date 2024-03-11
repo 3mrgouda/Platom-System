@@ -1,18 +1,19 @@
 import React, { useEffect, useState } from 'react';
 import { db } from '../../../Firebase';
 import { collection, getDocs, addDoc, deleteDoc, doc } from 'firebase/firestore';
-import { FaPlus } from 'react-icons/fa6';
+import { FaCaretDown, FaPlus } from 'react-icons/fa6';
 import { AiOutlineUsergroupDelete } from 'react-icons/ai';
 
 
 
-
 export default function Memebers() {
-  const [member, setMember] = useState([])
+  const [member, setMember] = useState([]);
+  const [team, setTeam] = useState([]);
   // Collection ref
-  const colRef = collection(db, "members");
+  const colRef = collection(db, "members" );
+  const colref = collection(db, "teams");
 
-  // get collection data
+  // get members data
   useEffect(() => {
     getDocs(colRef).then((snapshot) => {
       var membersDocs = [];
@@ -26,6 +27,19 @@ export default function Memebers() {
       })
   }, [])
 
+  //get teams data
+  useEffect(() => {
+    getDocs(colref).then((snapshot) => {
+      var teamDoc = [];
+      snapshot.docs.forEach((doc) => {
+        teamDoc.push({ ...doc.data(), id: doc.id })
+      })
+      setTeam(teamDoc)
+    })
+      .catch(err => {
+        console.log(err.message)
+      })
+  }, [])
 
   //add data
   const [newMember, setNewMember] = useState([]);
@@ -36,7 +50,7 @@ export default function Memebers() {
       console.log("New  member added successfully!");
       // Clear the input field
       setNewMember('');
-      
+
 
       //show new data with out reload 
       getDocs(colRef).then((snapshot) => {
@@ -57,12 +71,17 @@ export default function Memebers() {
     }
   };
 
+  // const sellectTeam = (id, Tname) => {
+  //   let teamsList = document.getElementById('teamsList');
+  //   teamsList.innerHTML = Tname;
+  //   setTemShow(teamsList.innerHTML)
+  // }
+
   //handle show add section
   const [visible, setVisible] = useState(false);
   const handleVisibleAdd = () => {
     setVisible(!visible);
   }
-
 
 
   //delet items
@@ -86,6 +105,12 @@ export default function Memebers() {
       console.error('Error removing document: ', error);
     }
   };
+
+  //this for team list in add new member
+let teamsList = document.getElementById('teamsList');
+const [temShow ,setTemShow] =useState();
+  
+
   return (
     <div className='w-full'>
 
@@ -93,7 +118,33 @@ export default function Memebers() {
 
         <div className='w-[80%] mx-auto  items-center justify-evenly hidden' style={{ display: visible ? 'flex' : visible }} >
           <input value={newMember} onChange={(e) => setNewMember(e.target.value)} className='border-solid border-2 border-black rounded-md hover:scale-105 duration-200 px-2 py-1 hover:border-purple-500' type="text" placeholder='Add New Member' />
-          <button onClick={() => addNewMember()} className='flex group items-center text-xl border-solid border-2 shadow-md hover:shadow-sm shadow-black hover:shadow-purple-500 border-purple-500 rounded-md py-1 hover:border-black duration-200 hover:scale-105 px-2'> <FaPlus /> Add New Team</button>
+
+
+
+          {/* simple drop-down and links  */}
+          <div className='cursor-pointer group hidden md:block'>
+            <a href="" className='inline-block hover:text-primary font-semibold text-xl'>
+              <div className='flex items-center gap-[2px] py-2' id='teamsList'>Teams <span id='parentIcon'><FaCaretDown className='group-hover:rotate-180 duration-300' /></span></div>
+            </a>
+            {/* drop-down section */}
+            <div className='absolute bg-white z-50 hidden group-hover:block w-[200px] shadow-md p-2'>
+              <ul>{
+                team.map((tem , i) => (
+                  <li className='font-mono font-bold text-2xl' onClick={() =>{
+                    teamsList.innerHTML = tem.Tname
+                    setTemShow(tem.Tname,i)
+                  } }>{tem.Tname}</li>
+                ))
+
+
+              }
+              </ul>
+            </div>
+          </div>
+
+
+
+          <button onClick={() => addNewMember()} className='flex group items-center text-xl border-solid border-2 shadow-md hover:shadow-sm shadow-black hover:shadow-purple-500 border-purple-500 rounded-md py-1 hover:border-black duration-200 hover:scale-105 px-2'> <FaPlus /> Add New Member</button>
         </div>
 
         <table className='w-[80%] mx-auto my-4 text-left'>
@@ -119,8 +170,8 @@ export default function Memebers() {
                   <tr key={i} className='border-b-2 lg:text-xl text-gray-700 capitalize hover:bg-purple-500  hover:text-black hover:scale-105 duration-150'>
                     <td>{i + 1}</td>
                     <td>{mem.name}</td>
-                    <td>{mem.Team}</td>
-                    <td>{mem.Event}</td>
+                    <td>{temShow}</td>                 
+                  
                     {/* <td>
                       <button className='cursor-pointer'>Update</button>
                     </td> */}

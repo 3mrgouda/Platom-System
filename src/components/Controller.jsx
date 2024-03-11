@@ -4,10 +4,10 @@ import ControlHero from './controller/ControlHero'
 
 const Controller = () => {
   return (
-    <>
+    <div className='bg-[#fff]'>
     <ControlNav/>
     <ControlHero/>
-    </>
+    </div>
   )
 }
 
