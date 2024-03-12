@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { db } from '../../../Firebase';
 import { collection, getDocs, addDoc, deleteDoc, doc } from 'firebase/firestore';
-import { FaCaretDown, FaPlus } from 'react-icons/fa6';
+import { FaCaretDown, FaLeaf, FaPlus } from 'react-icons/fa6';
 import { AiOutlineUsergroupDelete } from 'react-icons/ai';
 
 
@@ -43,10 +43,11 @@ export default function Memebers() {
 
   //add data
   const [newMember, setNewMember] = useState([]);
+  const [temShow ,setTemShow] =useState([]);
   const addNewMember = async () => {
     try {
       // Add data to Firestore
-      await addDoc(colRef, { name: newMember }); // Add your desired data structure here
+      await addDoc(colRef, { name: newMember , tname: temShow  }); // Add your desired data structure here
       console.log("New  member added successfully!");
       // Clear the input field
       setNewMember('');
@@ -108,7 +109,10 @@ export default function Memebers() {
 
   //this for team list in add new member
 let teamsList = document.getElementById('teamsList');
-const [temShow ,setTemShow] =useState();
+const [mood,setMood]=useState(false);
+const handlemood=()=>{
+  setMember(!mood);
+}
   
 
   return (
@@ -133,6 +137,7 @@ const [temShow ,setTemShow] =useState();
                   <li className='font-mono font-bold text-2xl' onClick={() =>{
                     teamsList.innerHTML = tem.Tname
                     setTemShow(tem.Tname,i)
+
                   } }>{tem.Tname}</li>
                 ))
 
@@ -144,7 +149,7 @@ const [temShow ,setTemShow] =useState();
 
 
 
-          <button onClick={() => addNewMember()} className='flex group items-center text-xl border-solid border-2 shadow-md hover:shadow-sm shadow-black hover:shadow-purple-500 border-purple-500 rounded-md py-1 hover:border-black duration-200 hover:scale-105 px-2'> <FaPlus /> Add New Member</button>
+          <button onClick={() => addNewMember() } className='flex group items-center text-xl border-solid border-2 shadow-md hover:shadow-sm shadow-black hover:shadow-purple-500 border-purple-500 rounded-md py-1 hover:border-black duration-200 hover:scale-105 px-2'> <FaPlus /> Add New Member</button>
         </div>
 
         <table className='w-[80%] mx-auto my-4 text-left'>
@@ -154,7 +159,7 @@ const [temShow ,setTemShow] =useState();
               <th>ID</th>
               <th>Name</th>
               <th>Team</th>
-              <th>Event</th>
+              {/* <th>Event</th> */}
               {/* <th>Update</th> */}
               <th>Delete</th>
               <th>                <button className='flex items-center text-xl bg-purple-500 rounded-md  px-2 lg:mt-[2px] font-bold' onClick={() => handleVisibleAdd()} > <FaPlus />Add</button>
@@ -170,7 +175,7 @@ const [temShow ,setTemShow] =useState();
                   <tr key={i} className='border-b-2 lg:text-xl text-gray-700 capitalize hover:bg-purple-500  hover:text-black hover:scale-105 duration-150'>
                     <td>{i + 1}</td>
                     <td>{mem.name}</td>
-                    <td>{temShow}</td>                 
+                    <td >{mem.tname}</td>                 
                   
                     {/* <td>
                       <button className='cursor-pointer'>Update</button>
