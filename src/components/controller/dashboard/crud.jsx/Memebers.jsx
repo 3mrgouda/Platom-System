@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { db } from '../../../Firebase';
 import { collection, getDocs, addDoc, deleteDoc, doc } from 'firebase/firestore';
-import { FaCaretDown, FaLeaf, FaPlus } from 'react-icons/fa6';
+import { FaCaretDown, FaPlus } from 'react-icons/fa6';
 import { AiOutlineUsergroupDelete } from 'react-icons/ai';
 
 
@@ -10,7 +10,7 @@ export default function Memebers() {
   const [member, setMember] = useState([]);
   const [team, setTeam] = useState([]);
   // Collection ref
-  const colRef = collection(db, "members" );
+  const colRef = collection(db, "members");
   const colref = collection(db, "teams");
 
   // get members data
@@ -43,40 +43,23 @@ export default function Memebers() {
 
   //add data
   const [newMember, setNewMember] = useState([]);
-  const [temShow ,setTemShow] =useState([]);
+  const [temShow, setTemShow] = useState([]);
+  let teamsList = document.getElementById('teamsList');
+
   const addNewMember = async () => {
     try {
       // Add data to Firestore
-      await addDoc(colRef, { name: newMember , tname: temShow  }); // Add your desired data structure here
+      await addDoc(colRef, { name: newMember, tname: temShow }); // Add your desired data structure here
       console.log("New  member added successfully!");
       // Clear the input field
       setNewMember('');
+      location.reload();
 
-
-      //show new data with out reload 
-      getDocs(colRef).then((snapshot) => {
-        var membersDocs = [];
-        snapshot.docs.forEach((doc) => {
-          membersDocs.push({ ...doc.data(), id: doc.id })
-        })
-        setMember(membersDocs)
-      })
-
-
-        .catch(err => {
-          console.log(err.message)
-        })
 
     } catch (error) {
       console.error("Error adding new  member: ", error);
     }
   };
-
-  // const sellectTeam = (id, Tname) => {
-  //   let teamsList = document.getElementById('teamsList');
-  //   teamsList.innerHTML = Tname;
-  //   setTemShow(teamsList.innerHTML)
-  // }
 
   //handle show add section
   const [visible, setVisible] = useState(false);
@@ -107,13 +90,8 @@ export default function Memebers() {
     }
   };
 
-  //this for team list in add new member
-let teamsList = document.getElementById('teamsList');
-const [mood,setMood]=useState(false);
-const handlemood=()=>{
-  setMember(!mood);
-}
-  
+
+
 
   return (
     <div className='w-full'>
@@ -133,12 +111,12 @@ const handlemood=()=>{
             {/* drop-down section */}
             <div className='absolute bg-white z-50 hidden group-hover:block w-[200px] shadow-md p-2'>
               <ul>{
-                team.map((tem , i) => (
-                  <li className='font-mono font-bold text-2xl' onClick={() =>{
+                team.map((tem, i) => (
+                  <li className='font-mono font-bold text-2xl' onClick={() => {
                     teamsList.innerHTML = tem.Tname
-                    setTemShow(tem.Tname,i)
+                    setTemShow(tem.Tname)
 
-                  } }>{tem.Tname}</li>
+                  }}>{tem.Tname}</li>
                 ))
 
 
@@ -149,7 +127,7 @@ const handlemood=()=>{
 
 
 
-          <button onClick={() => addNewMember() } className='flex group items-center text-xl border-solid border-2 shadow-md hover:shadow-sm shadow-black hover:shadow-purple-500 border-purple-500 rounded-md py-1 hover:border-black duration-200 hover:scale-105 px-2'> <FaPlus /> Add New Member</button>
+          <button onClick={() => addNewMember()} className='flex group items-center text-xl border-solid border-2 shadow-md hover:shadow-sm shadow-black hover:shadow-purple-500 border-purple-500 rounded-md py-1 hover:border-black duration-200 hover:scale-105 px-2'> <FaPlus /> Add New Member</button>
         </div>
 
         <table className='w-[80%] mx-auto my-4 text-left'>
@@ -159,8 +137,6 @@ const handlemood=()=>{
               <th>ID</th>
               <th>Name</th>
               <th>Team</th>
-              {/* <th>Event</th> */}
-              {/* <th>Update</th> */}
               <th>Delete</th>
               <th>                <button className='flex items-center text-xl bg-purple-500 rounded-md  px-2 lg:mt-[2px] font-bold' onClick={() => handleVisibleAdd()} > <FaPlus />Add</button>
               </th>
@@ -175,14 +151,8 @@ const handlemood=()=>{
                   <tr key={i} className='border-b-2 lg:text-xl text-gray-700 capitalize hover:bg-purple-500  hover:text-black hover:scale-105 duration-150'>
                     <td>{i + 1}</td>
                     <td>{mem.name}</td>
-                    <td >{mem.tname}</td>                 
-                  
-                    {/* <td>
-                      <button className='cursor-pointer'>Update</button>
-                    </td> */}
-
+                    <td >{mem.tname}</td>
                     <td><button onClick={() => handleDelete(mem.id)} className='ml-5'><AiOutlineUsergroupDelete className='hover:scale-150 cursor-pointer hover:bg-red-600 hover:rounded-md duration-200' /></button></td>
-
                   </tr>
                 )
               })
