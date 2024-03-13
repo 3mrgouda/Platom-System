@@ -9,7 +9,7 @@ const NavLinks = [
 
 function Navbar() {
     return (
-        <div>
+        <div data-aos='fade-down'>
             <div className="container lg:w-[80%] mx-auto lg:my-4 flex justify-between items-center">
                 <div className="logo  lg:text-3xl font-mono uppercase ">
                     <Link className='border-solid rounded-md border-purple-500 border-4 py-1 px-4' to="/">Platom System</Link>
