@@ -14,9 +14,9 @@ export default function Events() {
       return;
     }
 
-    const newteam = { id: events.length, memName: evntValue };
-    setevents((prevevents) => [...prevevents, newteam]);
-    localStorage.setItem("events", JSON.stringify([...events, newteam]));
+    const newEvent = { id: events.length, memName: evntValue };
+    setevents((prevevents) => [...prevevents, newEvent]);
+    localStorage.setItem("events", JSON.stringify([...events, newEvent]));
     setEvntValue("");
     setWarningMessage("");
   };
@@ -64,7 +64,7 @@ export default function Events() {
           <input
             value={evntValue}
             onChange={(e) => setEvntValue(e.target.value)}
-            className="border-solid border-2 border-black rounded-md hover:scale-105 duration-200 px-2 py-1 hover:border-purple-500"
+            className="border-solid border-2 border-black rounded-md hover:scale-105 duration-200 px-2 py-1 hover:border-purple-500 capitalize"
             type="text"
             placeholder="Add New Event"
           />

@@ -11,7 +11,7 @@ export default function Footer() {
         by{" "}
         <a
           className="text-blue-600 hover:underline"
-          href="https://github.com/3mrgouda/Platom-System"
+          href="https://www.linkedin.com/in/3mrgouda"
           target="_blank"
         >
           @3mrgouda
