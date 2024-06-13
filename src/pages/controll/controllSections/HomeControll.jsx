@@ -43,11 +43,13 @@ export default function HomeControll() {
     }
   }, []);
 
-
   const deleteCollectionData = (index) => {
     const updateCollectionData = collectionData.filter((_, i) => i !== index);
     setCollectionData(updateCollectionData);
-    localStorage.setItem("collectionData", JSON.stringify(updateCollectionData));
+    localStorage.setItem(
+      "collectionData",
+      JSON.stringify(updateCollectionData)
+    );
   };
   return (
     <div className="w-[80%] mx-auto">
@@ -124,16 +126,22 @@ export default function HomeControll() {
         <tbody>
           {collectionData.map((data, i) => {
             return (
-              <tr key={i} className="border-b-2 lg:text-xl text-gray-700 capitalize hover:bg-purple-500  hover:text-black hover:scale-105 duration-150">
+              <tr
+                key={i}
+                className="border-b-2 lg:text-xl text-gray-700 capitalize hover:bg-purple-500  hover:text-black hover:scale-105 duration-150"
+              >
                 <td>{i + 1}</td>
                 <td>{data.event}</td>
                 <td>{data.fristteam}</td>
                 <td>{data.secondteam}</td>
                 <td>
-                    <button onClick={() => deleteCollectionData(i)} className="ml-5">
-                      <AiOutlineUsergroupDelete className="hover:scale-150 cursor-pointer hover:bg-red-600 hover:rounded-md duration-200" />
-                    </button>
-                  </td>
+                  <button
+                    onClick={() => deleteCollectionData(i)}
+                    className="ml-5"
+                  >
+                    <AiOutlineUsergroupDelete className="hover:scale-150 cursor-pointer hover:bg-red-600 hover:rounded-md duration-200" />
+                  </button>
+                </td>
               </tr>
             );
           })}
@@ -142,5 +150,3 @@ export default function HomeControll() {
     </div>
   );
 }
-
-
