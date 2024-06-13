@@ -1,46 +1,109 @@
-import React from "react";
+import React, { useState } from "react";
 import { FaGithub, FaLinkedin } from "react-icons/fa6";
+import { IoClose, IoMenu } from "react-icons/io5";
 import { Link } from "react-router-dom";
+
 const NavLinks = [
-  { id: 1, link: "#", item: "Home" },
-  { id: 2, link: "#", item: "Contact" },
-  { id: 3, link: "#", item: "About" },
+  { id: 1, link: "/", item: "Home" },
+  { id: 2, link: "/contact", item: "Contact" },
+  { id: 3, link: "/about", item: "About" },
 ];
 
 function Navbar() {
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+
+  const toggleMenu = () => {
+    setIsMenuOpen(!isMenuOpen);
+  };
+
   return (
-    <div data-aos="fade-down">
-      <nav className="container lg:w-[80%] mx-auto lg:my-4 flex justify-between items-center">
-        <div className="logo  lg:text-3xl font-mono uppercase ">
+    <div>
+      <nav className="container mx-auto flex justify-between items-center py-4 px-6 lg:px-0">
+        <div className="logo mb-4 lg:mb-0">
           <Link
-            className="border-solid rounded-md border-purple-500 border-4 py-1 px-4"
+            className="border-solid rounded-md border-purple-500 border-4 py-1 px-4 text-xl font-bold"
             to="/"
           >
             Platom System
           </Link>
         </div>
-
-        <div className="navLinks lg:w-[50%] ">
-          <ul className="flex lg:justify-around lg:w-full">
-            {NavLinks.map(({ id, link, item }) => {
-              return (
-                <li key={id}>
-                  <a href={link}>{item}</a>
-                </li>
-              );
-            })}
-          </ul>
+        <div className="lg:hidden">
+          <button onClick={toggleMenu}>
+            {!isMenuOpen ? (
+              <IoMenu className="text-3xl" />
+            ) : (
+              <IoClose className="text-3xl" />
+            )}
+          </button>
         </div>
 
-        <div className="icons flex justify-around text-xl lg:w-[8%]">
-          <a href="https://www.linkedin.com/in/3mrgouda" target="_blank">
+        <div
+          className={`linksForLarge hidden lg:flex-row items-center gap-4 lg:gap-8 lg:flex`}
+        >
+          <ul className="navLinks lg:flex flex-row gap-4 lg:gap-8">
+            {NavLinks.map(({ id, link, item }) => (
+              <li key={id}>
+                <Link
+                  to={link}
+                  className="text-lg hover:text-purple-500 transition duration-200"
+                >
+                  {item}
+                </Link>
+              </li>
+            ))}
+          </ul>
+          <div className="icons flex gap-4 text-2xl">
+            <a
+              href="https://www.linkedin.com/in/3mrgouda"
+              target="_blank"
+              className="hover:text-purple-500 transition duration-200"
+            >
+              <FaLinkedin />
+            </a>
+            <a
+              href="https://github.com/3mrgouda/Platom-System"
+              target="_blank"
+              className="hover:text-purple-500 transition duration-200"
+            >
+              <FaGithub />
+            </a>
+          </div>
+        </div>
+      </nav>
+      <div
+        className={`LinksForSmall lg:hidden ${
+          isMenuOpen ? "flex" : "hidden"
+        } justify-center items-center gap-4 lg:gap-8`}
+      >
+        <ul className="navLinks flex gap-4 lg:gap-8">
+          {NavLinks.map(({ id, link, item }) => (
+            <li key={id}>
+              <Link
+                to={link}
+                className="text-lg hover:text-purple-500 transition duration-200"
+              >
+                {item}
+              </Link>
+            </li>
+          ))}
+        </ul>
+        <div className="icons flex gap-4 text-2xl">
+          <a
+            href="https://www.linkedin.com/in/3mrgouda"
+            target="_blank"
+            className="hover:text-purple-500 transition duration-200"
+          >
             <FaLinkedin />
           </a>
-          <a href="https://github.com/3mrgouda/Platom-System" target="_blank">
+          <a
+            href="https://github.com/3mrgouda/Platom-System"
+            target="_blank"
+            className="hover:text-purple-500 transition duration-200"
+          >
             <FaGithub />
           </a>
         </div>
-      </nav>
+      </div>
     </div>
   );
 }
