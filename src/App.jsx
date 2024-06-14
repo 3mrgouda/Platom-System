@@ -8,7 +8,8 @@ import Members from "./pages/Members";
 import Teams from "./pages/Teams";
 import Events from "./pages/Events";
 import NotFound from "./pages/NotFound";
-import Main from "./pages/Main";
+import Controller from "./pages/Controller";
+import ControlNav from "./pages/ControlNav";
 
 function App() {
   useEffect(() => {
@@ -25,10 +26,37 @@ function App() {
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="/main" element={<Main />} />
-        <Route path="members" element={<Members />} />
-        <Route path="teams" element={<Teams />} />
-        <Route path="events" element={<Events />} />
+        <Route
+          path="events"
+          element={
+            <>
+              <ControlNav />
+              <Controller />
+
+              <Events />
+            </>
+          }
+        />
+        <Route
+          path="members"
+          element={
+            <>
+              <ControlNav />
+              <Controller />
+              <Members />{" "}
+            </>
+          }
+        />
+        <Route
+          path="teams"
+          element={
+            <>
+              <ControlNav />
+              <Controller />
+              <Teams />
+            </>
+          }
+        />
         <Route path="*" element={<NotFound />} />
       </Routes>
     </BrowserRouter>

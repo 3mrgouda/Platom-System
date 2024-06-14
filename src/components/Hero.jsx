@@ -21,7 +21,7 @@ const Hero = () => {
           is a free system management tool to manage your events professionally.
         </p>
         <Link
-          to="/main"
+          to="/events"
           data-aos="zoom-in"
           className="flex items-center gap-4 text-xl md:text-2xl lg:text-3xl capitalize font-mono border-solid border-black border-4 rounded-md py-3 px-4 mt-6 hover:scale-105 duration-200"
         >
