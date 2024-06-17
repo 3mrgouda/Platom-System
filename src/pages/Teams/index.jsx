@@ -5,7 +5,8 @@ import { AiOutlineUsergroupDelete } from "react-icons/ai";
 export default function Teams() {
   const getMembersFromStorage = localStorage.getItem("members");
 
-  const [teams, setTeams] = useState([
+  const [teams, setTeams] = useState(
+    [
     {
       id: 0,
       teamName: "Flibbers",
